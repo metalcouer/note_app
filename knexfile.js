@@ -4,7 +4,7 @@ module.exports = {
 
   development: {
     client: 'pg',
-    connection: 'postgresql://localhost:3005/flashcard_db'
+    connection: 'postgre://localhost/flashcards_db'
   },
 
   production: {

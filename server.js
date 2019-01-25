@@ -1,14 +1,21 @@
 const express = require('express')
 const app = express()
-var port = process.env.PORT || 3000;
-var knex = require('./knex');
+const port = 3000
 
-console.log(knex);
+const environment = process.env.NODE_ENV || 'development';
+const knexConfig = require('./knexfile')[environment];
+const db = require('knex')(knexConfig);
 
-app.get('/', function(req, res, next){
-    res.send('hello world')
+
+
+app.get('/', (req, res, next) => {
+    db('flashcards')
+    .then((rows) => {
+      res.send(rows);
+    })
+    .catch((err) => {
+      next(err);
+    });
 })
 
-app.listen(port, function(){
-    console.log(`porty on ${port}`)
-})
+app.listen(port, () => console.log(`Porty on port ${port}!`))
